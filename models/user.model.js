@@ -4,10 +4,10 @@ const Schema = mongoose.Schema;
 const SALT_WORK_FACTOR = 10;
 
 var UserSchema = new Schema({
-  firstname: { type: String, required: true, trim: true },
-  middlename: { type: String, required: false, trim: true },
-  lastname: { type: String, required: true, trim: true },
-  countrycode: { type: String, required: true, trim: true },
+  firstName: { type: String, required: true, trim: true },
+  middleName: { type: String, required: false, trim: true },
+  lastName: { type: String, required: true, trim: true },
+  countryCode: { type: String, required: true, trim: true },
   mobile: { type: String, required: true, trim: true },
   email: { type: String, required: true, unique: true, trim: true },
   password: { type: String, required: true, trim: true },
@@ -16,7 +16,7 @@ var UserSchema = new Schema({
     required: true,
     trim: true,
   },
-  annyversary: {
+  anniversary: {
     type: Date,
     required: false,
     trim: true,
@@ -75,7 +75,7 @@ var UserSchema = new Schema({
     required: true,
     trim: true,
   },
-  fpno: {
+  fpNo: {
     type: String,
     required: true,
     trim: true,
