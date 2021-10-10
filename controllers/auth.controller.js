@@ -12,52 +12,56 @@ const nanoid = customAlphabet(alphabet, 12);
 export const getStarted = (req, res) => {
   const { email } = req.body;
   const token = jwt.sign(
-    { email, id: mongoose.Types.ObjectId() },
+    {
+      email,
+      id: mongoose.Types.ObjectId(),
+      fpno: nanoid(),
+      club: CLUB.find((c) => c.id == 1),
+      membershipTier: MEMBERSHIP_TIER.find((m) => m.id == 10),
+    },
     process.env.JWT_SECRET,
     {
       expiresIn: "1h",
     }
   );
   sendEmailVerification(email, token);
-  res.json({ email });
+  res.status(200).json({ message: "Email sent" });
 };
 
 export const verify = (req, res) => {
   const { token } = req.query;
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    res.json({
+    res.status(200).json({
       ...decoded,
-      fpno: nanoid(),
-      club: CLUB.find((c) => c.id == 1),
-      membershipTier: MEMBERSHIP_TIER.find((m) => m.id == 10),
     });
   } catch (error) {
-    res.json({ error });
+    res.status(400).json({ error });
   }
 };
 
 export const createProfile = (req, res) => {
-  new User(req.body)
+  new User({ ...req.body, profilePic: req.files[0].location })
     .save()
     .then((user) => {
-      res.json(user);
+      res.status(201).json(user);
     })
     .catch(({ errors }) => {
-      res.json({ errors });
+      res.status(400).json({ errors });
     });
 };
 
 export const login = (req, res) => {
+  console.log();
   const { email, password } = req.body;
   User.findOne({ email })
     .then((user) => {
       if (!user) {
-        return res.json({ error: "Invalid email" });
+        return res.status(400).json({ error: "Invalid email" });
       }
       user.comparePassword(password, (err, isMatch) => {
         if (!isMatch) {
-          return res.json({ error: "Invalid password" });
+          return res.status(400).json({ error: "Invalid password" });
         } else {
           const token = jwt.sign(
             { email, id: user._id },
@@ -66,7 +70,7 @@ export const login = (req, res) => {
               expiresIn: "1h",
             }
           );
-          return res.json({ token });
+          return res.status(200).json({ token });
         }
       });
     })
