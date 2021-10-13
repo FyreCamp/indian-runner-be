@@ -18,7 +18,7 @@ export const sendEmailVerification = (email, token) => {
       subject: "Please verify your email",
       html: `
 			<p>Please click on the link to verify (only valid till 1 hour):</p>
-			<a href="https://www.indrunners.com//verify?token=${token}">Verify Account</a>
+			<a href="https://www.indrunners.com/verify?token=${token}">Verify Account</a>
 
 			`,
     },
