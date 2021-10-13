@@ -95,6 +95,10 @@ var UserSchema = new Schema({
   },
 });
 
+UserSchema.set("toJSON", {
+  virtuals: true,
+});
+
 UserSchema.pre("save", function (next) {
   var user = this;
 
