@@ -2,8 +2,6 @@ import express, { json, urlencoded } from "express";
 const app = express();
 import mongoose from "mongoose";
 import cors from "cors";
-import fs from "fs";
-import https from "https";
 
 import authRoutes from "./routers/auth.router.js";
 import adminRoutes from "./routers/admin.router.js";
@@ -33,19 +31,10 @@ app.use(cors());
 app.use("/auth", authRoutes);
 app.use("/admin", adminRoutes);
 app.get("/", (req, res) => {
-  res.send("Hello world!!");
+  res.send("Hello!");
 });
 
 const PORT = process.env.PORT || 5000;
-https
-  .createServer(
-    {
-      key: fs.readFileSync(process.env.SSL_KEY),
-      cert: fs.readFileSync(process.env.SSL_CERT),
-      ca: process.env.SSL_CA && fs.readFileSync(process.env.SSL_CA),
-    },
-    app
-  )
-  .listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-  });
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
