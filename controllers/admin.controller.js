@@ -1,6 +1,7 @@
 import User from "../models/user.model";
 import Challenge from "../models/challenge.model";
 import Global from "../models/global.model";
+import Leaderboard from "../models/leaderboard.model";
 
 export const createGlobal = (req, res) => {
   console.log(req.file);
@@ -99,12 +100,16 @@ export const deleteUser = async (req, res) => {
 
 export const createChallenge = async (req, res) => {
   try {
-    const challenge = await Challenge({
+    const challenge = new Challenge({
       ...req.body,
       bannerImageWide: req.files.bannerImageWide.location,
       bannerImageSquare: req.files.bannerImageSquare.location,
     });
+    const leaderboard = new Leaderboard({
+      challengeId: challenge._id,
+    });
     await challenge.save();
+    await leaderboard.save();
     res.status(200).json(challenge);
   } catch (err) {
     res.status(404).json({ message: err });

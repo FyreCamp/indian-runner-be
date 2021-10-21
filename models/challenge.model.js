@@ -6,7 +6,11 @@ export const challengeModes = [
   "OPEN_CHALLENGE",
   "MOVE_DAILY",
   "RACE",
-  "FIXED_TARGET",
+  "FIXED_TOTAL",
+  "HOURLY_KNOCKOUT",
+  "DAILY_KNOCKOUT",
+  "SPARTAN",
+  "LEAGUE",
 ];
 export const challengeSports = [
   "RUN",
@@ -55,10 +59,6 @@ const challengeSchema = new Schema({
     required: true,
   },
   brief: {
-    type: String,
-    required: true,
-  },
-  sport: {
     type: String,
     required: true,
   },
