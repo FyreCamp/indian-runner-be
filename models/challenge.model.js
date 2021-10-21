@@ -149,6 +149,11 @@ const challengeSchema = new Schema({
     enum: challengeTags,
     required: false,
   },
+  rewards: {
+    type: [String],
+    enum: challengeRewards,
+    default: ["BADGE"],
+  },
   sport: {
     type: String,
     enum: challengeSports,
