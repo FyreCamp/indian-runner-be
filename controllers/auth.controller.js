@@ -1,13 +1,8 @@
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import { sendEmailVerification } from "../services/email.service";
-import { customAlphabet } from "nanoid";
-import { MEMBERSHIP_TIER, CLUB } from "../utils/constants";
+import { MEMBERSHIP_TIER, CLUB, getFPNo } from "../utils/constants";
 import User from "../models/user.model";
-
-const alphabet =
-  "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-const nanoid = customAlphabet(alphabet, 12);
 
 export const getStarted = (req, res) => {
   const { email } = req.body;
@@ -15,7 +10,7 @@ export const getStarted = (req, res) => {
     {
       email,
       id: mongoose.Types.ObjectId(),
-      fpno: nanoid(),
+      fpno: getFPNo(),
       club: CLUB.find((c) => c.id == 1),
       membershipTier: MEMBERSHIP_TIER.find((m) => m.id == 10),
     },
@@ -24,6 +19,7 @@ export const getStarted = (req, res) => {
       expiresIn: "1h",
     }
   );
+  console.log(token);
   sendEmailVerification(email, token);
   res.status(200).json({ message: "Email sent" });
 };
@@ -41,6 +37,7 @@ export const verify = (req, res) => {
 };
 
 export const createProfile = (req, res) => {
+  if (!req.files) return res.status(400).json({ error: "No file uploaded" });
   new User({ ...req.body, profilePic: req.files[0].location })
     .save()
     .then((user) => {
@@ -67,7 +64,7 @@ export const login = (req, res) => {
             { email, id: user._id },
             process.env.JWT_SECRET,
             {
-              expiresIn: "1h",
+              expiresIn: "1d",
             }
           );
           return res.status(200).json({ token });

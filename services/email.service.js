@@ -23,8 +23,7 @@ export const sendEmailVerification = (email, token) => {
 			`,
     },
     (err, info) => {
-      console.log(info.envelope);
-      console.log(info.messageId);
+      console.log("EMAIL SENT_____________", info);
     }
   );
 };
