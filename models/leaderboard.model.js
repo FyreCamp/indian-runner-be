@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
 const leaderboardSchema = new Schema({
-  challengeId: {
+  challenge: {
     type: Schema.Types.ObjectId,
     ref: "Challenge",
     required: true,

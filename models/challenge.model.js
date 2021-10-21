@@ -152,10 +152,9 @@ const challengeSchema = new Schema({
     required: true,
     default: "KM",
   },
-  leaderboardId: {
+  leaderboard: {
     type: Schema.Types.ObjectId,
     ref: "Leaderboard",
-    required: true,
   },
 });
 

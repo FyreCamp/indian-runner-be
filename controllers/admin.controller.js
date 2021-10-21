@@ -106,8 +106,9 @@ export const createChallenge = async (req, res) => {
       bannerImageSquare: req.files.bannerImageSquare.location,
     });
     const leaderboard = new Leaderboard({
-      challengeId: challenge._id,
+      challenge: challenge._id,
     });
+    challenge.leaderboard = leaderboard._id;
     await challenge.save();
     await leaderboard.save();
     res.status(200).json(challenge);
