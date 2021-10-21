@@ -100,11 +100,20 @@ export const deleteUser = async (req, res) => {
 
 export const createChallenge = async (req, res) => {
   try {
+    console.log(req.files);
+    Object.keys(req.body).forEach((key) => {
+      if (req.body[key] === "") {
+        req.body[key] = null;
+      } else {
+        req.body[key] = JSON.parse(req.body[key]);
+      }
+    });
     const challenge = new Challenge({
       ...req.body,
-      bannerImageWide: req.files.bannerImageWide.location,
-      bannerImageSquare: req.files.bannerImageSquare.location,
+      bannerImageWide: req.files.bannerImageWide[0].location,
+      bannerImageSquare: req.files.bannerImageSquare[0].location,
     });
+    console.log(challenge);
     const leaderboard = new Leaderboard({
       challenge: challenge._id,
     });
@@ -113,6 +122,7 @@ export const createChallenge = async (req, res) => {
     await leaderboard.save();
     res.status(200).json(challenge);
   } catch (err) {
+    console.log(err);
     res.status(404).json({ message: err });
   }
 };
