@@ -49,13 +49,24 @@ export const challengeRewards = [
   "T_SHIRT",
 ];
 
+const descriptionSchema = new Schema({
+  title: {
+    type: String,
+    required: true,
+  },
+  details: {
+    type: [String],
+    required: true,
+  },
+});
+
 const challengeSchema = new Schema({
   name: {
     type: String,
     required: true,
   },
   details: {
-    type: String,
+    type: [descriptionSchema],
     required: true,
   },
   brief: {
