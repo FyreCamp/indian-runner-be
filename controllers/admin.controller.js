@@ -111,7 +111,6 @@ export const createChallenge = async (req, res) => {
       ...req.body,
       bannerImageWide: req.files.bannerImageWide[0].location,
       bannerImageSquare: req.files.bannerImageSquare[0].location,
-      categories: req.body.category,
     });
     const leaderboard = new Leaderboard({
       challenge: challenge._id,
