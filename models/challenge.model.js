@@ -139,8 +139,8 @@ const challengeSchema = new Schema({
     type: String,
     required: true,
   },
-  category: {
-    type: String,
+  categories: {
+    type: [String],
     enum: displayCategories,
     required: true,
   },

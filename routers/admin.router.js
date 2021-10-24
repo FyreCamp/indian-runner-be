@@ -43,8 +43,6 @@ router
   .route("/challenges")
   .get(listChallenge)
   .post(
-    isAuthenticated,
-    isAdmin,
     uploadChallengePic.fields([
       { name: "bannerImageWide", maxCount: 1 },
       { name: "bannerImageSquare", maxCount: 1 },

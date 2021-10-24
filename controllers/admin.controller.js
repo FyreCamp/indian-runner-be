@@ -100,7 +100,6 @@ export const deleteUser = async (req, res) => {
 
 export const createChallenge = async (req, res) => {
   try {
-    console.log(req.files);
     Object.keys(req.body).forEach((key) => {
       if (req.body[key] === "") {
         req.body[key] = null;
@@ -112,9 +111,8 @@ export const createChallenge = async (req, res) => {
       ...req.body,
       bannerImageWide: req.files.bannerImageWide[0].location,
       bannerImageSquare: req.files.bannerImageSquare[0].location,
-      categories: req.body.categories.map((category) => JSON.parse(category)),
+      categories: req.body.category,
     });
-    console.log(challenge);
     const leaderboard = new Leaderboard({
       challenge: challenge._id,
     });
