@@ -5,8 +5,10 @@ import cors from "cors";
 
 import authRoutes from "./routers/auth.router.js";
 import adminRoutes from "./routers/admin.router.js";
+import userRoutes from "./routers/user.router.js";
 import dotenv from "dotenv";
 import morgan from "morgan";
+import { isAdmin, isAuthenticated } from "./middlewares/auth.middleware.js";
 
 if (process.env.NODE_ENV !== "production") {
   dotenv.config();
@@ -29,7 +31,8 @@ app.use(urlencoded({ extended: true }));
 app.use(cors());
 
 app.use("/auth", authRoutes);
-app.use("/admin", adminRoutes);
+app.use("/admin", isAuthenticated, isAdmin, adminRoutes);
+app.use("/user", isAuthenticated, userRoutes);
 app.get("/", (req, res) => {
   res.send("Hello!");
 });

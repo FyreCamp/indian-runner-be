@@ -11,7 +11,7 @@ export const isAuthenticated = (req, res, next) => {
         .status(500)
         .send({ auth: false, message: "Failed to authenticate token." });
     }
-    const user = await User.findById(decoded.id);
+    const user = await User.findById(decoded.id).select("-password");
     if (!user) {
       return res.status(500).send({ auth: false, message: "No user found." });
     }

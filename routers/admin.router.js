@@ -21,34 +21,27 @@ import {
 import { isAuthenticated, isAdmin } from "../middlewares/auth.middleware";
 import { uploadProfilePic, uploadChallengePic } from "../services/s3.service";
 
-router
-  .route("/globals")
-  .get(isAuthenticated, isAdmin, listGlobals)
-  .post(isAuthenticated, isAdmin, createGlobal);
+router.route("/globals").get(listGlobals).post(createGlobal);
 router
   .route("/globals/:id")
-  .get(isAuthenticated, isAdmin, getGlobal)
-  .put(isAuthenticated, isAdmin, updateGlobal)
-  .delete(isAuthenticated, isAdmin, deleteGlobal);
+  .get(getGlobal)
+  .put(updateGlobal)
+  .delete(deleteGlobal);
 
 router
   .route("/users")
-  .get(isAuthenticated, isAdmin, listUsers)
+  .get(listUsers)
   .post(
     isAuthenticated,
     isAdmin,
     uploadProfilePic.array("profile", 1),
     createUser
   );
-router
-  .route("/users/:id")
-  .get(isAuthenticated, isAdmin, getUser)
-  .put(isAuthenticated, isAdmin, updateUser)
-  .delete(isAuthenticated, isAdmin, deleteUser);
+router.route("/users/:id").get(getUser).put(updateUser).delete(deleteUser);
 
 router
   .route("/challenges")
-  .get(isAuthenticated, isAdmin, listChallenge)
+  .get(listChallenge)
   .post(
     isAuthenticated,
     isAdmin,
@@ -60,8 +53,8 @@ router
   );
 router
   .route("/challenges/:id")
-  .get(isAuthenticated, isAdmin, getChallenge)
-  .put(isAuthenticated, isAdmin, updateChallenge)
-  .delete(isAuthenticated, isAdmin, deleteChallenge);
+  .get(getChallenge)
+  .put(updateChallenge)
+  .delete(deleteChallenge);
 
 export default router;
