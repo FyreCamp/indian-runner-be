@@ -5,7 +5,7 @@ import cors from "cors";
 
 import authRoutes from "./routers/auth.router.js";
 import adminRoutes from "./routers/admin.router.js";
-import userRoutes from "./routers/user.router.js";
+import userRoutes from "./routers/user.router";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import { isAdmin, isAuthenticated } from "./middlewares/auth.middleware.js";
