@@ -37,8 +37,7 @@ export const verify = (req, res) => {
 };
 
 export const createProfile = (req, res) => {
-  if (!req.files) return res.status(400).json({ error: "No file uploaded" });
-  new User({ ...req.body, profilePic: req.files[0].location })
+  new User({ ...req.body })
     .save()
     .then((user) => {
       res.status(201).json(user);
@@ -73,5 +72,17 @@ export const login = (req, res) => {
     })
     .catch(({ errors }) => {
       return res.json({ errors });
+    });
+};
+
+export const setProfilePic = (req, res) => {
+  if (!req.files) return res.status(400).json({ errors: ["No file uploaded"] });
+  const { id } = req.params;
+  User.findByIdAndUpdate(id, { profilePic: req.files[0].location })
+    .then((user) => {
+      res.status(200).json(user);
+    })
+    .catch(({ errors }) => {
+      res.status(400).json({ errors });
     });
 };
