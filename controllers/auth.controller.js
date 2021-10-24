@@ -4,13 +4,14 @@ import { sendEmailVerification } from "../services/email.service";
 import { MEMBERSHIP_TIER, CLUB, getFPNo } from "../utils/constants";
 import User from "../models/user.model";
 
-export const getStarted = (req, res) => {
+export const getStarted = async (req, res) => {
   const { email } = req.body;
+  const fpNo = await getFPNo();
   const token = jwt.sign(
     {
       email,
       id: mongoose.Types.ObjectId(),
-      fpno: getFPNo(),
+      fpno: fpNo,
       club: CLUB.find((c) => c.id == 1),
       membershipTier: MEMBERSHIP_TIER.find((m) => m.id == 10),
     },
@@ -48,7 +49,6 @@ export const createProfile = (req, res) => {
 };
 
 export const login = (req, res) => {
-  console.log();
   const { email, password } = req.body;
   User.findOne({ email })
     .then((user) => {
