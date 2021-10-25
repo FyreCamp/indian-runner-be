@@ -17,7 +17,11 @@ import {
   getChallenge,
   updateChallenge,
   deleteChallenge,
+  createFaqs,
+  editFaqs,
+  deleteFaqs,
 } from "../controllers/admin.controller";
+import { getFaqs, listFaqs } from "../controllers/global.controller";
 import { isAuthenticated, isAdmin } from "../middlewares/auth.middleware";
 import { uploadProfilePic, uploadChallengePic } from "../services/s3.service";
 
@@ -54,5 +58,8 @@ router
   .get(getChallenge)
   .put(updateChallenge)
   .delete(deleteChallenge);
+
+router.route("/faqs").post(createFaqs).get(listFaqs);
+router.route("/faqs:id").put(editFaqs).delete(deleteFaqs).get(getFaqs);
 
 export default router;

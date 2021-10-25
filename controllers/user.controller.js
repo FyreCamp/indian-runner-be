@@ -19,3 +19,20 @@ export const listChallenges = async (req, res) => {
     },
   });
 };
+
+export const getChallenge = async (req, res) => {
+  const { id } = req.params;
+  const challenge = await Challenge.findById(id);
+  if (!challenge) {
+    return res.status(404).json({
+      status: "fail",
+      message: "Challenge not found",
+    });
+  }
+  res.status(200).json({
+    status: "success",
+    data: {
+      challenge,
+    },
+  });
+};

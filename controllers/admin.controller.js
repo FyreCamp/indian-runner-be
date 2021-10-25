@@ -2,6 +2,7 @@ import User from "../models/user.model";
 import Challenge from "../models/challenge.model";
 import Global from "../models/global.model";
 import Leaderboard from "../models/leaderboard.model";
+import Faq from "../models/faq.model";
 
 export const createGlobal = (req, res) => {
   console.log(req.file);
@@ -161,5 +162,33 @@ export const deleteChallenge = async (req, res) => {
     res.status(200).json({ message: "Challenge deleted" });
   } catch (err) {
     res.status(404).json({ message: err });
+  }
+};
+
+export const createFaqs = async (req, res) => {
+  try {
+    const faqs = await Faq.create({ ...req.body });
+    res.status(201).json(faqs);
+  } catch (err) {
+    res.status(400).json({ errors: err });
+  }
+};
+
+
+export const editFaqs = async (req, res) => {
+  try {
+    const faqs = await Faq.findByIdAndUpdate(req.params.id, req.body);
+    res.status(200).json(faqs);
+  } catch (err) {
+    res.status(404).json({ errors: err });
+  }
+};
+
+export const deleteFaqs = async (req, res) => {
+  try {
+    const faqs = await Faq.findByIdAndDelete(req.params.id);
+    res.status(200).json({ message: "Faqs deleted" });
+  } catch (err) {
+    res.status(404).json({ errors: err });
   }
 };
