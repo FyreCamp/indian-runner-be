@@ -60,6 +60,6 @@ router
   .delete(deleteChallenge);
 
 router.route("/faqs").post(createFaqs).get(listFaqs);
-router.route("/faqs:id").put(editFaqs).delete(deleteFaqs).get(getFaqs);
+router.route("/faqs/:id").get(getFaqs).put(editFaqs).delete(deleteFaqs);
 
 export default router;
