@@ -104,6 +104,9 @@ export const submitData = async (req, res) => {
     });
   }
   const { details } = req.body;
+  if (req.file) {
+    details.proof = req.file.location;
+  }
   submission.total.distance += details.distance;
   submission.total.time += details.timeTake;
   submission.total.count += details.count;
