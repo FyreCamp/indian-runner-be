@@ -1,5 +1,6 @@
 import Challenge from "../models/challenge.model";
 import Submission from "../models/submission.model";
+import User from "../models/user.model";
 
 export const getInfo = (req, res) => {
   const { user } = req;
