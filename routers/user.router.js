@@ -15,8 +15,8 @@ router.route("/challenges").get(listChallenges);
 
 router.route("/challenges/:id").get(getChallenge);
 
-router.post("challenges/:id/register", registerToChallenge);
-router.post("challenges/:id/submit", submitData);
-router.get("challenges/:id/leaderboard", getLeaderboard);
+router.post("/challenges/:id/register", registerToChallenge);
+router.post("/challenges/:id/submit", submitData);
+router.get("/challenges/:id/leaderboard", getLeaderboard);
 
 export default router;
