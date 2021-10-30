@@ -24,8 +24,7 @@ export const listChallenges = async (req, res) => {
 export const listMyChallenges = async (req, res) => {
   const myChallenges = await User.find({ _id: req.user._id }).populate({
     path: "challenges",
-    model: "Challenge",
-    select: "title description _id",
+    select: "name _id",
   });
   res.status(200).json({
     status: "success",
