@@ -21,6 +21,16 @@ export const listChallenges = async (req, res) => {
   });
 };
 
+export const listChallenges = async (req, res) => {
+  const challenges = await Challenge.find({});
+  res.status(200).json({
+    status: "success",
+    data: {
+      challenges,
+    },
+  });
+};
+
 export const getChallenge = async (req, res) => {
   const { id } = req.params;
   const challenge = await Challenge.findById(id);

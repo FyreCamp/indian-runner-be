@@ -93,6 +93,11 @@ var UserSchema = new Schema({
     required: true,
     trim: true,
   },
+  challenges: {
+    type: [Schema.Types.ObjectId],
+    ref: "Challenge",
+    required: false,
+  },
 });
 
 UserSchema.set("toJSON", {

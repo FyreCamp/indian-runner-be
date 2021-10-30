@@ -26,3 +26,14 @@ export const uploadChallengePic = multer({
     },
   }),
 });
+
+export const uploadProof = multer({
+  storage: multerS3({
+    s3: s3,
+    acl: "public-read",
+    bucket: "indian-runner",
+    key: function (req, file, cb) {
+      cb(null, `submission_proof/${file.fieldname}-${Date.now()}`); //use Date.now() for unique file keys
+    },
+  }),
+});
