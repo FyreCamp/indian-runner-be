@@ -4,6 +4,7 @@ import {
   getInfo,
   getLeaderboard,
   listChallenges,
+  listMyChallenges,
   registerToChallenge,
   submitData,
 } from "../controllers/user.controller";
@@ -13,7 +14,7 @@ const router = Router();
 router.get("/info", getInfo);
 
 router.route("/challenges").get(listChallenges);
-router.route("/my-challenges").get(listChallenges);
+router.route("/my-challenges").get(listMyChallenges);
 
 router.route("/challenges/:id").get(getChallenge);
 
