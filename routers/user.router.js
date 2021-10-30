@@ -19,7 +19,11 @@ router.route("/my-challenges").get(listMyChallenges);
 router.route("/challenges/:id").get(getChallenge);
 
 router.post("/challenges/:id/register", registerToChallenge);
-router.post("/challenges/:id/submit", uploadProof("imgProof"), submitData);
+router.post(
+  "/challenges/:id/submit",
+  uploadProof.single("imgProof"),
+  submitData
+);
 router.get("/challenges/:id/leaderboard", getLeaderboard);
 
 export default router;
