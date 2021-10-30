@@ -31,7 +31,7 @@ export const listMyChallenges = async (req, res) => {
     });
   res.status(200).json({
     status: "success",
-    data: myChallenges.challenges,
+    data: myChallenges,
   });
 };
 
