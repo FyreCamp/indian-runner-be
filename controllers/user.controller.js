@@ -56,6 +56,7 @@ export const registerToChallenge = async (req, res) => {
   const { id } = req.params;
   const { user } = req;
   const challenge = await Challenge.findById(id);
+  const userObject = await User.findById(user._id);
   if (!challenge) {
     return res.status(404).json({
       status: "fail",
@@ -69,6 +70,8 @@ export const registerToChallenge = async (req, res) => {
     });
   }
   challenge.users.push(user._id);
+  userObject.challenges.push(id);
+  await userObject.save();
   await challenge.save();
   const submission = new Submission({
     user: user._id,
