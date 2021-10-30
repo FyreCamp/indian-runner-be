@@ -72,6 +72,7 @@ export const registerToChallenge = async (req, res) => {
     data: {
       challenge,
     },
+    message: "You have registered to this challenge",
   });
 };
 
