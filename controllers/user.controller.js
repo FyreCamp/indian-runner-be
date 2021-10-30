@@ -22,15 +22,15 @@ export const listChallenges = async (req, res) => {
 };
 
 export const listMyChallenges = async (req, res) => {
-  const myChallenges = await User.find({ _id: req.user._id }).populate({
-    path: "challenges",
-    select: "name _id",
-  });
+  const myChallenges = await User.find({ _id: req.user._id })
+    .select("challenges")
+    .populate({
+      path: "challenges",
+      select: "name _id",
+    });
   res.status(200).json({
     status: "success",
-    data: {
-      challenges: myChallenges.challenges,
-    },
+    data: myChallenges.challenges,
   });
 };
 
