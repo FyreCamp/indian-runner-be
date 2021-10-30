@@ -172,6 +172,11 @@ const challengeSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Leaderboard",
   },
+  users: {
+    type: [Schema.Types.ObjectId],
+    ref: "User",
+    default: [],
+  },
 });
 
 challengeSchema.set("toJSON", {

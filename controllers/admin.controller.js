@@ -1,7 +1,7 @@
 import User from "../models/user.model";
 import Challenge from "../models/challenge.model";
 import Global from "../models/global.model";
-import Leaderboard from "../models/leaderboard.model";
+// import Leaderboard from "../models/leaderboard.model";
 import Faq from "../models/faq.model";
 
 export const createGlobal = (req, res) => {
@@ -113,12 +113,12 @@ export const createChallenge = async (req, res) => {
       bannerImageWide: req.files.bannerImageWide[0].location,
       bannerImageSquare: req.files.bannerImageSquare[0].location,
     });
-    const leaderboard = new Leaderboard({
-      challenge: challenge._id,
-    });
-    challenge.leaderboard = leaderboard._id;
+    // const leaderboard = new Leaderboard({
+    //   challenge: challenge._id,
+    // });
+    // challenge.leaderboard = leaderboard._id;
     await challenge.save();
-    await leaderboard.save();
+    // await leaderboard.save();
     res.status(200).json(challenge);
   } catch (err) {
     console.log(err);
@@ -167,13 +167,13 @@ export const deleteChallenge = async (req, res) => {
 
 export const createFaqs = async (req, res) => {
   try {
-    const faqs = await Faq.create({ ...req.body });
-    res.status(201).json(faqs);
+    const faqs = new Faq({ ...req.body });
+    await faqs.save();
+    res.status(200).json(faqs);
   } catch (err) {
     res.status(400).json({ errors: err });
   }
 };
-
 
 export const editFaqs = async (req, res) => {
   try {
