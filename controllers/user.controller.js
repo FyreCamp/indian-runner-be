@@ -106,16 +106,23 @@ export const submitData = async (req, res) => {
       message: "Submission not found",
     });
   }
-  const { details } = req.body;
-  console.log(details);
-  parsedDetails = JSON.parse(details);
+  console.log(req.body);
+  const details = {
+    distance: req.body.distance || 0,
+    timeTaken: req.body.timeTaken,
+    count: req.body.count || 0,
+    sport: req.body.sport,
+    date: req.body.date,
+    proof: req.body.proof || null,
+  };
+
   if (req.file) {
-    parsedDetails.proof = req.file.location;
+    details.proof = req.file.location;
   }
-  submission.total.distance += parsedDetails.distance;
-  submission.total.time += parsedDetails.timeTake;
-  submission.total.count += parsedDetails.count;
-  submission.details.push(parsedDetails);
+  submission.total.distance += details.distance;
+  submission.total.time += details.timeTake;
+  submission.total.count += details.count;
+  submission.details.push(details);
   await submission.save();
   res.status(200).json({
     status: "success",
