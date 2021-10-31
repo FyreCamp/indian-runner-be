@@ -155,7 +155,7 @@ export const getLeaderboard = async (req, res) => {
       ["total.time", "ascending"],
     ])
     .populate({
-      path: "user",
+      path: "userId",
       select: "name",
     });
   res.status(200).json({
