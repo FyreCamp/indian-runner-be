@@ -110,7 +110,7 @@ export const submitData = async (req, res) => {
     console.log(req.body);
     const details = {
       distance: req.body.distance || 0,
-      timeTaken: req.body.timeTaken || 0,
+      timeTake: req.body.timeTaken || 0,
       count: req.body.count || 0,
       sport: req.body.sport,
       date: req.body.date,
