@@ -156,7 +156,7 @@ export const getLeaderboard = async (req, res) => {
     ])
     .populate({
       path: "userId",
-      select: "name",
+      select: "firstName lastName middleName fpNo email mobile",
     });
   res.status(200).json({
     status: "success",
