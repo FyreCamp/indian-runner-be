@@ -69,12 +69,8 @@ export const registerToChallenge = async (req, res) => {
       message: "You are already registered to this challenge",
     });
   }
-  challenge.users.push(user._id);
-  userObject.challenges.push(id);
-  await userObject.save();
-  await challenge.save();
   const submission = new Submission({
-    user: user._id,
+    userId: user._id,
     challenge: challenge._id,
     details: [],
     total: {
@@ -83,8 +79,12 @@ export const registerToChallenge = async (req, res) => {
       count: 0,
     },
   });
+  challenge.users.push(user._id);
+  userObject.challenges.push(id);
+  await userObject.save();
+  await challenge.save();
   await submission.save();
-  res.status(200).json({
+  return res.status(200).json({
     status: "success",
     data: {
       challenge,
