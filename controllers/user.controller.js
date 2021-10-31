@@ -107,9 +107,9 @@ export const submitData = async (req, res) => {
     });
   }
   const { details } = req.body;
+  console.log(details);
   parsedDetails = JSON.parse(details);
   if (req.file) {
-    console.log(req.file);
     parsedDetails.proof = req.file.location;
   }
   submission.total.distance += parsedDetails.distance;
