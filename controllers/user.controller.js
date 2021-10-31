@@ -107,14 +107,15 @@ export const submitData = async (req, res) => {
     });
   }
   const { details } = req.body;
+  parsedDetails = JSON.parse(details);
   if (req.file) {
     console.log(req.file);
-    details.proof = req.file.location;
+    parsedDetails.proof = req.file.location;
   }
-  submission.total.distance += details.distance;
-  submission.total.time += details.timeTake;
-  submission.total.count += details.count;
-  submission.details.push(details);
+  submission.total.distance += parsedDetails.distance;
+  submission.total.time += parsedDetails.timeTake;
+  submission.total.count += parsedDetails.count;
+  submission.details.push(parsedDetails);
   await submission.save();
   res.status(200).json({
     status: "success",
