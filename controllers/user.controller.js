@@ -108,6 +108,7 @@ export const submitData = async (req, res) => {
   }
   const { details } = req.body;
   if (req.file) {
+    console.log(req.file);
     details.proof = req.file.location;
   }
   submission.total.distance += details.distance;
