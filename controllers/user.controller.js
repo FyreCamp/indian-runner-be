@@ -96,40 +96,48 @@ export const registerToChallenge = async (req, res) => {
 export const submitData = async (req, res) => {
   const { id } = req.params;
   const { user } = req;
-  const submission = await Submission.findOne({
-    user: user._id,
-    challenge: id,
-  });
-  if (!submission) {
-    return res.status(404).json({
+  try {
+    const submission = await Submission.findOne({
+      user: user._id,
+      challenge: id,
+    });
+    if (!submission) {
+      return res.status(404).json({
+        status: "fail",
+        message: "Submission not found",
+      });
+    }
+    console.log(req.body);
+    const details = {
+      distance: req.body.distance || 0,
+      timeTaken: req.body.timeTaken || 0,
+      count: req.body.count || 0,
+      sport: req.body.sport,
+      date: req.body.date,
+      proof: req.body.proof || null,
+    };
+
+    if (req.file) {
+      details.proof = req.file.location;
+    }
+    submission.total.distance += Number(details.distance);
+    submission.total.time += Number(details.timeTake);
+    submission.total.count += Number(details.count);
+    submission.details.push(details);
+    await submission.save();
+    res.status(200).json({
+      status: "success",
+      data: {
+        submission,
+      },
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
       status: "fail",
-      message: "Submission not found",
+      message: "Internal server error",
     });
   }
-  console.log(req.body);
-  const details = {
-    distance: req.body.distance || 0,
-    timeTaken: req.body.timeTaken,
-    count: req.body.count || 0,
-    sport: req.body.sport,
-    date: req.body.date,
-    proof: req.body.proof || null,
-  };
-
-  if (req.file) {
-    details.proof = req.file.location;
-  }
-  submission.total.distance += details.distance;
-  submission.total.time += details.timeTake;
-  submission.total.count += details.count;
-  submission.details.push(details);
-  await submission.save();
-  res.status(200).json({
-    status: "success",
-    data: {
-      submission,
-    },
-  });
 };
 
 export const getLeaderboard = async (req, res) => {
