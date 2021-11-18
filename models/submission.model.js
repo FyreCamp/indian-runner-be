@@ -46,11 +46,6 @@ const submissionDetails = new Schema({
 });
 
 const submissionSchema = new Schema({
-  challenge: {
-    type: Schema.Types.ObjectId,
-    ref: "Challenge",
-    required: true,
-  },
   userId: {
     type: Schema.Types.ObjectId,
     ref: "User",

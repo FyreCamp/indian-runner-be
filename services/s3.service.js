@@ -21,7 +21,6 @@ export const uploadChallengePic = multer({
     acl: "public-read",
     bucket: "indian-runner",
     key: function (req, file, cb) {
-      console.log(file);
       cb(null, `challenge_pics/${file.fieldname}-${Date.now()}`); //use Date.now() for unique file keys
     },
   }),

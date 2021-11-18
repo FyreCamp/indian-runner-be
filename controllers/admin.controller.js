@@ -113,12 +113,7 @@ export const createChallenge = async (req, res) => {
       bannerImageWide: req.files.bannerImageWide[0].location,
       bannerImageSquare: req.files.bannerImageSquare[0].location,
     });
-    // const leaderboard = new Leaderboard({
-    //   challenge: challenge._id,
-    // });
-    // challenge.leaderboard = leaderboard._id;
     await challenge.save();
-    // await leaderboard.save();
     res.status(200).json(challenge);
   } catch (err) {
     console.log(err);

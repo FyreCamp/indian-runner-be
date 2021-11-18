@@ -94,12 +94,10 @@ export const registerToChallenge = async (req, res) => {
 };
 
 export const submitData = async (req, res) => {
-  const { id } = req.params;
   const { user } = req;
   try {
     const submission = await Submission.findOne({
       user: user._id,
-      challenge: id,
     });
     if (!submission) {
       return res.status(404).json({
