@@ -177,6 +177,10 @@ const challengeSchema = new Schema({
     ref: "User",
     default: [],
   },
+  rules: {
+    type: [String],
+    required: true,
+  },
 });
 
 challengeSchema.set("toJSON", {
