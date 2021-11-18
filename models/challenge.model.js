@@ -60,6 +60,17 @@ const descriptionSchema = new Schema({
   },
 });
 
+const targetSchema = new Schema({
+  target: {
+    type: Number,
+    required: true,
+  },
+  unit: {
+    type: String,
+    required: true,
+  },
+});
+
 const challengeSchema = new Schema({
   name: {
     type: String,
@@ -160,13 +171,8 @@ const challengeSchema = new Schema({
     required: true,
   },
   target: {
-    type: Number,
+    type: [targetSchema],
     required: true,
-  },
-  targetUnit: {
-    type: String,
-    required: true,
-    default: "KM",
   },
   leaderboard: {
     type: Schema.Types.ObjectId,
