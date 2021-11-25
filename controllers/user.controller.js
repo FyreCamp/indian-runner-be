@@ -1,6 +1,13 @@
-import Challenge from "../models/challenge.model";
+import Challenge, { challengeTypes } from "../models/challenge.model";
 import Submission from "../models/submission.model";
 import User from "../models/user.model";
+import maxDistanceModel from "../models/challengeTypes/max-distance.model";
+import moveEverydayModel from "../models/challengeTypes/move-everyday.model";
+import raceModel from "../models/challengeTypes/race.model";
+import fixedTotalModel from "../models/challengeTypes/fixed-total.model";
+import hourlyKnockoutModel from "../models/challengeTypes/hourly-knockout.model";
+import dailyKnockoutModel from "../models/challengeTypes/daily-knockout.model";
+import spartanModel from "../models/challengeTypes/spartan.model";
 
 export const getInfo = (req, res) => {
   const { user } = req;
@@ -54,7 +61,7 @@ export const getChallenge = async (req, res) => {
 
 export const registerToChallenge = async (req, res) => {
   const { id } = req.params;
-  const { user } = req;
+  const { user, level } = req;
   const challenge = await Challenge.findById(id);
   const userObject = await User.findById(user._id);
   if (!challenge) {
@@ -69,21 +76,58 @@ export const registerToChallenge = async (req, res) => {
       message: "You are already registered to this challenge",
     });
   }
-  const submission = new Submission({
+  let challengeTypeObj;
+  switch (challenge.challengeType) {
+    case challengeTypes[0]:
+      challengeTypeObj = await maxDistanceModel.findOne({
+        challenge: challenge._id,
+      });
+      break;
+    case challengeTypes[1]:
+      challengeTypeObj = await moveEverydayModel.findOne({
+        challenge: challenge._id,
+      });
+      break;
+    case challengeTypes[2]:
+      challengeTypeObj = await raceModel.findOne({
+        challenge: challenge._id,
+      });
+      break;
+    case challengeTypes[3]:
+      challengeTypeObj = await fixedTotalModel.findOne({
+        challenge: challenge._id,
+      });
+      break;
+    case challengeTypes[4]:
+      challengeTypeObj = await hourlyKnockoutModel.findOne({
+        challenge: challenge._id,
+      });
+      break;
+    case challengeTypes[5]:
+      challengeTypeObj = await dailyKnockoutModel.findOne({
+        challenge: challenge._id,
+      });
+      break;
+    case challengeTypes[6]:
+      challengeTypeObj = await spartanModel.findOne({
+        challenge: challenge._id,
+      });
+      break;
+    default:
+      return res.status(400).json({
+        status: "fail",
+        message: "Invalid Challenge Type",
+      });
+  }
+  challengeTypeObj.user.push({
     userId: user._id,
-    challenge: challenge._id,
-    details: [],
-    total: {
-      distance: 0,
-      time: 0,
-      count: 0,
-    },
+    targetRegistered: level,
   });
   challenge.users.push(user._id);
   userObject.challenges.push(id);
   await userObject.save();
   await challenge.save();
-  await submission.save();
+  await challengeTypeObj.save();
   return res.status(200).json({
     status: "success",
     data: {
@@ -118,9 +162,6 @@ export const submitData = async (req, res) => {
     if (req.file) {
       details.proof = req.file.location;
     }
-    submission.total.distance += Number(details.distance);
-    submission.total.time += Number(details.timeTake);
-    submission.total.count += Number(details.count);
     submission.details.push(details);
     await submission.save();
     res.status(200).json({

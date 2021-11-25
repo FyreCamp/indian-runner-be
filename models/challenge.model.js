@@ -187,6 +187,34 @@ const challengeSchema = new Schema({
     type: [String],
     required: true,
   },
+  maxDistance: {
+    type: Schema.Types.ObjectId,
+    ref: "MaxDistance",
+  },
+  MoveEveryday: {
+    type: Schema.Types.ObjectId,
+    ref: "MoveEveryday",
+  },
+  Race: {
+    type: Schema.Types.ObjectId,
+    ref: "Race",
+  },
+  FixedTotal: {
+    type: Schema.Types.ObjectId,
+    ref: "FixedTotal",
+  },
+  HourlyKnockout: {
+    type: Schema.Types.ObjectId,
+    ref: "HourlyKnockout",
+  },
+  DailyKnockout: {
+    type: Schema.Types.ObjectId,
+    ref: "DailyKnockout",
+  },
+  Spartan: {
+    type: Schema.Types.ObjectId,
+    ref: "Spartan",
+  },
 });
 
 challengeSchema.set("toJSON", {
