@@ -1,4 +1,4 @@
-import Challenge, { challengeTypes } from "../models/challenge.model";
+import Challenge, { challengeModes } from "../models/challenge.model";
 import Submission from "../models/submission.model";
 import User from "../models/user.model";
 import maxDistanceModel from "../models/challengeTypes/max-distance.model";
@@ -78,37 +78,37 @@ export const registerToChallenge = async (req, res) => {
   }
   let challengeTypeObj;
   switch (challenge.challengeType) {
-    case challengeTypes[0]:
+    case challengeModes[0]:
       challengeTypeObj = await maxDistanceModel.findOne({
         challenge: challenge._id,
       });
       break;
-    case challengeTypes[1]:
+    case challengeModes[1]:
       challengeTypeObj = await moveEverydayModel.findOne({
         challenge: challenge._id,
       });
       break;
-    case challengeTypes[2]:
+    case challengeModes[2]:
       challengeTypeObj = await raceModel.findOne({
         challenge: challenge._id,
       });
       break;
-    case challengeTypes[3]:
+    case challengeModes[3]:
       challengeTypeObj = await fixedTotalModel.findOne({
         challenge: challenge._id,
       });
       break;
-    case challengeTypes[4]:
+    case challengeModes[4]:
       challengeTypeObj = await hourlyKnockoutModel.findOne({
         challenge: challenge._id,
       });
       break;
-    case challengeTypes[5]:
+    case challengeModes[5]:
       challengeTypeObj = await dailyKnockoutModel.findOne({
         challenge: challenge._id,
       });
       break;
-    case challengeTypes[6]:
+    case challengeModes[6]:
       challengeTypeObj = await spartanModel.findOne({
         challenge: challenge._id,
       });

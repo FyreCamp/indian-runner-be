@@ -1,5 +1,5 @@
 import User from "../models/user.model";
-import Challenge, { challengeTypes } from "../models/challenge.model";
+import Challenge, { challengeModes } from "../models/challenge.model";
 import Global from "../models/global.model";
 // import Leaderboard from "../models/leaderboard.model";
 import Faq from "../models/faq.model";
@@ -123,49 +123,49 @@ export const createChallenge = async (req, res) => {
     let challengeTypeObj;
 
     switch (req.body.challengeType) {
-      case challengeTypes[0]:
+      case challengeModes[0]:
         challengeTypeObj = new maxDistanceModel({
           challenge: challenge._id,
           targets: req.body.targets,
         });
         challenge.maxDistance = challengeTypeObj._id;
         break;
-      case challengeTypes[1]:
+      case challengeModes[1]:
         challengeTypeObj = new moveEverydayModel({
           challenge: challenge._id,
           targets: req.body.targets,
         });
         challenge.moveEveryday = challengeTypeObj._id;
         break;
-      case challengeTypes[2]:
+      case challengeModes[2]:
         challengeTypeObj = new raceModel({
           challenge: challenge._id,
           targets: req.body.targets,
         });
         challenge.race = challengeTypeObj._id;
         break;
-      case challengeTypes[3]:
+      case challengeModes[3]:
         challengeTypeObj = new fixedTotalModel({
           challenge: challenge._id,
           targets: req.body.targets,
         });
         challenge.fixedTotal = challengeTypeObj._id;
         break;
-      case challengeTypes[4]:
+      case challengeModes[4]:
         challengeTypeObj = new hourlyKnockoutModel({
           challenge: challenge._id,
           targets: req.body.targets,
         });
         challenge.hourlyKnockout = challengeTypeObj._id;
         break;
-      case challengeTypes[5]:
+      case challengeModes[5]:
         challengeTypeObj = new dailyKnockoutModel({
           challenge: challenge._id,
           targets: req.body.targets,
         });
         challenge.dailyKnockout = challengeTypeObj._id;
         break;
-      case challengeTypes[6]:
+      case challengeModes[6]:
         challengeTypeObj = new spartanModel({
           challenge: challenge._id,
           targets: req.body.targets,

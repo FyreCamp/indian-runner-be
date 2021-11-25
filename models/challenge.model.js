@@ -60,17 +60,6 @@ const descriptionSchema = new Schema({
   },
 });
 
-const targetSchema = new Schema({
-  target: {
-    type: Number,
-    required: true,
-  },
-  unit: {
-    type: String,
-    required: true,
-  },
-});
-
 const challengeSchema = new Schema({
   name: {
     type: String,
@@ -169,14 +158,6 @@ const challengeSchema = new Schema({
     type: String,
     enum: challengeSports,
     required: true,
-  },
-  target: {
-    type: [targetSchema],
-    required: true,
-  },
-  leaderboard: {
-    type: Schema.Types.ObjectId,
-    ref: "Leaderboard",
   },
   users: {
     type: [Schema.Types.ObjectId],
