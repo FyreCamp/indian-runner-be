@@ -111,7 +111,10 @@ export const createChallenge = async (req, res) => {
     Object.keys(req.body).forEach((key) => {
       if (req.body[key] === "") {
         req.body[key] = null;
-      } else {
+      } else if (
+        (req.body[key].includes("[") && req.body[key].includes("]")) ||
+        (req.body[key].includes("{") && req.body[key].includes("}"))
+      ) {
         req.body[key] = JSON.parse(req.body[key]);
       }
     });
@@ -122,7 +125,7 @@ export const createChallenge = async (req, res) => {
     });
     let challengeTypeObj;
 
-    switch (req.body.challengeType) {
+    switch (req.body.challengeMode) {
       case challengeModes[0]:
         challengeTypeObj = new maxDistanceModel({
           challenge: challenge._id,
@@ -180,7 +183,7 @@ export const createChallenge = async (req, res) => {
     res.status(200).json(challenge);
   } catch (err) {
     console.log(err);
-    res.status(404).json({ message: err });
+    res.status(400).json({ message: err });
   }
 };
 
