@@ -20,7 +20,7 @@ export const getInfo = (req, res) => {
 };
 
 export const listChallenges = async (req, res) => {
-  const challenges = await Challenge.find({});
+  const challenges = await Challenge.find({}).sort({ _id: -1 });
   res.status(200).json({
     status: "success",
     data: {
