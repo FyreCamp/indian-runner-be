@@ -189,7 +189,7 @@ export const createChallenge = async (req, res) => {
 
 export const listChallenge = async (req, res) => {
   try {
-    const challenges = await Challenge.find();
+    const challenges = await Challenge.find().sort({ _id: -1 });
     res.json(challenges);
   } catch (err) {
     res.json({ message: err });
