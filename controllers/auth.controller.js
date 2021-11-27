@@ -86,3 +86,7 @@ export const setProfilePic = (req, res) => {
       res.status(400).json({ errors });
     });
 };
+
+export const check = (req, res) => {
+  return res.status(200).json({ auth: true, message: "user logged in" });
+}

@@ -6,7 +6,9 @@ import {
   verify,
   createProfile,
   login,
+  check,
 } from "../controllers/auth.controller";
+import { isAuthenticated } from "../middlewares/auth.middleware";
 
 import { uploadProfilePic } from "../services/s3.service";
 
@@ -19,5 +21,6 @@ router.post(
   createProfile
 );
 router.post("/login", login);
+router.get("/check", isAuthenticated, check);
 
 export default router;
