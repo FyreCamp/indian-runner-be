@@ -1,7 +1,7 @@
 import User from "../models/user.model";
 import Challenge, { challengeModes } from "../models/challenge.model";
 import Global from "../models/global.model";
-import Badge from "../models/Badge.model";
+import Badge from "../models/badge.model";
 import Faq from "../models/faq.model";
 import maxDistanceModel from "../models/challengeTypes/max-distance.model";
 import moveEverydayModel from "../models/challengeTypes/move-everyday.model";

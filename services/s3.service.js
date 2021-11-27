@@ -15,6 +15,17 @@ export const uploadProfilePic = multer({
   }),
 });
 
+export const uploadBadgePic = multer({
+  storage: multerS3({
+    s3: s3,
+    acl: "public-read",
+    bucket: "indian-runner",
+    key: function (req, file, cb) {
+      cb(null, `badge_pic/${file.fieldname}-${Date.now()}.png`); //use Date.now() for unique file keys
+    },
+  }),
+});
+
 export const uploadChallengePic = multer({
   storage: multerS3({
     s3: s3,

@@ -27,8 +27,11 @@ import {
   deleteBadge,
 } from "../controllers/admin.controller";
 import { getFaqs, listFaqs } from "../controllers/global.controller";
-import { isAuthenticated, isAdmin } from "../middlewares/auth.middleware";
-import { uploadProfilePic, uploadChallengePic } from "../services/s3.service";
+import {
+  uploadProfilePic,
+  uploadChallengePic,
+  uploadBadgePic,
+} from "../services/s3.service";
 
 router.route("/globals").get(listGlobals).post(createGlobal);
 router
@@ -46,7 +49,7 @@ router.route("/users/:id").get(getUser).put(updateUser).delete(deleteUser);
 router
   .route("/badges")
   .get(listBadges)
-  .post(uploadProfilePic.array("image", 1), createBadge);
+  .post(uploadBadgePic.array("image", 1), createBadge);
 router.route("/badges/:id").get(getBadge).put(updateBadge).delete(deleteBadge);
 
 router
