@@ -43,7 +43,7 @@ router
 router
   .route("/users")
   .get(listUsers)
-  .post(uploadProfilePic.array("profile", 1), createUser);
+  .post(uploadProfilePic.array("profilePic", 1), createUser);
 router.route("/users/:id").get(getUser).put(updateUser).delete(deleteUser);
 
 router
