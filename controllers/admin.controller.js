@@ -178,6 +178,9 @@ export const createChallenge = async (req, res) => {
       default:
         throw new Error("Invalid challenge type.");
     }
+    const badge = await Badge.findById(req.body.badge);
+    badge.challenges.push(challenge._id);
+    await badge.save();
     await challengeTypeObj.save();
     await challenge.save();
     res.status(200).json(challenge);
