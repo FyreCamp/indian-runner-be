@@ -225,7 +225,7 @@ export const deleteChallenge = async (req, res) => {
     const challenge = await Challenge.findById(req.params.id);
     const badge = await Badge.findById(challenge.badge);
     if (badge) {
-      const idx = badge.challenges.indexOf(this._id);
+      const idx = badge.challenges.indexOf(challenge._id);
       if (idx > -1) {
         badge.challenges.splice(idx, 1);
         await badge.save();
