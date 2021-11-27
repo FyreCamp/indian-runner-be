@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import badgeModel from "./badge.model";
 const Schema = mongoose.Schema;
 
 export const challengeTypes = ["OPEN", "CORPORATE"];
@@ -205,18 +204,6 @@ const challengeSchema = new Schema({
 
 challengeSchema.set("toJSON", {
   virtuals: true,
-});
-
-challengeSchema.post("remove", async (next) => {
-  const badge = await badgeModel.findById(this.badge);
-  if (badge) {
-    const idx = badge.challenges.indexOf(this._id);
-    if (idx > -1) {
-      badge.challenges.splice(idx, 1);
-      await badge.save();
-    }
-  }
-  next();
 });
 
 export default mongoose.model("Challenge", challengeSchema);

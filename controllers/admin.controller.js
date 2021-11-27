@@ -222,7 +222,16 @@ export const updateChallenge = async (req, res) => {
 
 export const deleteChallenge = async (req, res) => {
   try {
-    const challenge = await Challenge.findByIdAndDelete(req.params.id);
+    const challenge = await Challenge.findById(req.params.id);
+    const badge = await Badge.findById(challenge.badge);
+    if (badge) {
+      const idx = badge.challenges.indexOf(this._id);
+      if (idx > -1) {
+        badge.challenges.splice(idx, 1);
+        await badge.save();
+      }
+    }
+    await challenge.remove();
     res.status(200).json({ message: "Challenge deleted" });
   } catch (err) {
     res.status(404).json({ message: err });
