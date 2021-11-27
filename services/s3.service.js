@@ -21,7 +21,7 @@ export const uploadBadgePic = multer({
     acl: "public-read",
     bucket: "indian-runner",
     key: function (req, file, cb) {
-      cb(null, `badge_pic/${file.fieldname}-${Date.now()}.svg`); //use Date.now() for unique file keys
+      cb(null, `badge_pic/${file.fieldname}-${Date.now()}`); //use Date.now() for unique file keys
     },
   }),
 });
