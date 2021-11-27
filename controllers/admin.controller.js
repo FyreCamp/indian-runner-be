@@ -1,7 +1,7 @@
 import User from "../models/user.model";
 import Challenge, { challengeModes } from "../models/challenge.model";
 import Global from "../models/global.model";
-// import Leaderboard from "../models/leaderboard.model";
+import Badge from "../models/Badge.model";
 import Faq from "../models/faq.model";
 import maxDistanceModel from "../models/challengeTypes/max-distance.model";
 import moveEverydayModel from "../models/challengeTypes/move-everyday.model";
@@ -251,5 +251,52 @@ export const deleteFaqs = async (req, res) => {
     res.status(200).json({ message: "Faqs deleted" });
   } catch (err) {
     res.status(404).json({ errors: err });
+  }
+};
+
+export const createBadge = (req, res) => {
+  new Badge({ ...req.body, image: req.files[0].location })
+    .save()
+    .then((badge) => {
+      res.status(201).json(badge);
+    })
+    .catch(({ errors }) => {
+      res.status(400).json({ errors });
+    });
+};
+
+export const listBadges = async (req, res) => {
+  try {
+    const badges = await Badge.find();
+    res.json(badges);
+  } catch (err) {
+    res.json({ message: err });
+  }
+};
+
+export const getBadge = async (req, res) => {
+  try {
+    const badge = await Badge.findById(req.params.id);
+    res.status(200).json(badge);
+  } catch (err) {
+    res.status(404).json({ message: err });
+  }
+};
+
+export const updateBadge = async (req, res) => {
+  try {
+    const badge = await Badge.findByIdAndUpdate(req.params.id, req.body);
+    res.status(200).json(badge);
+  } catch (err) {
+    res.status(404).json({ message: err });
+  }
+};
+
+export const deleteBadge = async (req, res) => {
+  try {
+    const _ = await Badge.findByIdAndDelete(req.params.id);
+    res.status(200).json({ message: "User deleted" });
+  } catch (err) {
+    res.status(404).json({ message: err });
   }
 };

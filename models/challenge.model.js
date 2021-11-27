@@ -168,6 +168,10 @@ const challengeSchema = new Schema({
     type: [String],
     required: true,
   },
+  badge: {
+    type: Schema.Types.ObjectId,
+    ref: "Badge",
+  },
   maxDistance: {
     type: Schema.Types.ObjectId,
     ref: "MaxDistance",

@@ -20,6 +20,11 @@ import {
   createFaqs,
   editFaqs,
   deleteFaqs,
+  listBadges,
+  getBadge,
+  createBadge,
+  updateBadge,
+  deleteBadge,
 } from "../controllers/admin.controller";
 import { getFaqs, listFaqs } from "../controllers/global.controller";
 import { isAuthenticated, isAdmin } from "../middlewares/auth.middleware";
@@ -35,13 +40,14 @@ router
 router
   .route("/users")
   .get(listUsers)
-  .post(
-    isAuthenticated,
-    isAdmin,
-    uploadProfilePic.array("profile", 1),
-    createUser
-  );
+  .post(uploadProfilePic.array("profile", 1), createUser);
 router.route("/users/:id").get(getUser).put(updateUser).delete(deleteUser);
+
+router
+  .route("/badges")
+  .get(listBadges)
+  .post(uploadProfilePic.array("image", 1), createBadge);
+router.route("/badges/:id").get(getBadge).put(updateBadge).delete(deleteBadge);
 
 router
   .route("/challenges")
